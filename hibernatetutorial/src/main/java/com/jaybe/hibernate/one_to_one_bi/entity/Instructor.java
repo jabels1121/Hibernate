@@ -1,4 +1,4 @@
-package com.jaybe.hibernate.one_to_one.entity;
+package com.jaybe.hibernate.one_to_one_bi.entity;
 
 import javax.persistence.*;
 

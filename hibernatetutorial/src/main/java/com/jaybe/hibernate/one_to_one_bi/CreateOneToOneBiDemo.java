@@ -1,12 +1,12 @@
-package com.jaybe.hibernate.one_to_one;
+package com.jaybe.hibernate.one_to_one_bi;
 
-import com.jaybe.hibernate.one_to_one.entity.Instructor;
-import com.jaybe.hibernate.one_to_one.entity.InstructorDetail;
+import com.jaybe.hibernate.one_to_one_bi.entity.Instructor;
+import com.jaybe.hibernate.one_to_one_bi.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DeleteOneToOneDemo {
+public class CreateOneToOneBiDemo {
 
     // create session factory
     private static SessionFactory factory = new Configuration()
@@ -22,24 +22,26 @@ public class DeleteOneToOneDemo {
             // create session
             Session session = factory.getCurrentSession();
 
+            System.out.println("Create objects in memory...");
+            // create the objects (Instructor and InstructorDetail
+            Instructor john = new Instructor("John", "Doe", "jDoe@mail.com");
+            InstructorDetail johnDetail =
+                    new InstructorDetail("https://www.youtube.com/channel/jonnyDoe", "anime");
+
+            // associate the objects(inject InstructorDetail to Instructor)
+            john.setInstructorDetail(johnDetail);
+
             // begin transaction
             // ...
             System.out.println("Begin transaction...");
             session.beginTransaction();
 
-            // get the instructor by primary kei /id
-            int theId = 1;
-            Instructor tmpInstructor =
-                    session.get(Instructor.class, theId);
-            System.out.println("Found instructor: "+tmpInstructor);
-
-            // delete the instructor
-            if (tmpInstructor != null) {
-                System.out.println("Deleting instructor: " + tmpInstructor);
-                // Note: will ALSO delete associated "details" object
-                // because of CascadeType.ALL
-                session.delete(tmpInstructor);
-            }
+            // save Instructor object to the database
+            //
+            // Note: this will ALSO save the instructorDetails object
+            // because of CascadeType.ALL
+            System.out.println("Save mapped objects into db...");
+            session.save(john);
 
             // ...
             // commit transaction
