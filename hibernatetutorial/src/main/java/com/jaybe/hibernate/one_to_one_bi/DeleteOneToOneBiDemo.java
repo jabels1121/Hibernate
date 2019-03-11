@@ -24,7 +24,7 @@ public class DeleteOneToOneBiDemo {
             // ...
             session.beginTransaction();
 
-            int theId = 3;
+            int theId = 2;
             // get the instructorDetail object
             InstructorDetail instructorDetail = session.get(InstructorDetail.class, theId);
 
